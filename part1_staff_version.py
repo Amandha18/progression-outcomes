@@ -82,12 +82,12 @@ def staff_main():
     while run_program != "q":
         while True:
             try:
-                pass_credits = int(input("Please enter your credits at pass: "))
+                pass_credits = int(input("Please enter credits at pass: "))
                 if validate_credits(pass_credits) is True:
                     if pass_credits == 120:
                         outcome = progression_outcome(pass_credits,0)
                     else:
-                        defer_credits = int(input("Please enter your credits at defer: "))
+                        defer_credits = int(input("Please enter credits at defer: "))
                         if validate_credits(defer_credits) is True:
                             if pass_credits + defer_credits == 120:
                                 outcome = progression_outcome(pass_credits,0)
@@ -95,7 +95,7 @@ def staff_main():
                                 print("Total Incorrect\n")
                                 continue
                             else:
-                                fail_credits = int(input("Please enter your credits at fail: "))
+                                fail_credits = int(input("Please enter credits at fail: "))
                                 if validate_credits(fail_credits) is True:
                                     if pass_credits + defer_credits + fail_credits == 120:
                                         outcome = progression_outcome(pass_credits,fail_credits)
