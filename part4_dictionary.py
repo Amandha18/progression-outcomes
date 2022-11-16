@@ -10,6 +10,13 @@ fail_credits = 0
 CRED = "\033[91m" #red
 CEND = "\033[0m"  #white
 
+def reset_values():
+    global student_progression_outcomes,pass_credits,defer_credits,fail_credits
+    student_progression_outcomes = {}
+    pass_credits = 0
+    defer_credits = 0
+    fail_credits = 0
+
 def validate_student_id(student_id):
     valid = False
     if len(student_id) == 8 and student_id.startswith('w'):
@@ -22,7 +29,7 @@ def validate_student_id(student_id):
                 break
     if valid is False:
         print("Inavlid Student ID\t e.g : w1234567, W1234567")
-        exit()
+        return False
 
 def validate_credits(credits):
     if credits > 120 or credits < 0 or credits % 20 != 0:
@@ -33,9 +40,9 @@ def validate_credits(credits):
 def check_duplicate_student_id(student_id):
     if student_id in student_progression_outcomes:
         print(CRED,"Student ID already exist in the dictionary",CEND)
-        duplicate = input("\nPress 'Y'(or any key) if you wish to re-enter student scores or 'Q' to quit: ").lower()
-        if duplicate == 'q':
-            exit()
+        reenter_entry = input("\nPress 'Y'(or any key) if you wish to re-enter student scores or 'Q' to quit: ").lower()
+        if reenter_entry == 'q': # skip from re entering the student credits
+            return True
 
 def progression_outcome(pass_credits,fail_credits):
     if pass_credits == 120:
@@ -49,10 +56,11 @@ def progression_outcome(pass_credits,fail_credits):
     return outcome
 
 # Main Program
-def main():
+def dictionary_program_main():
+    reset_values() # reset the data that was entered earlier
     global pass_credits,defer_credits,fail_credits,student_progression_outcomes
     
-    title = "P R O G R E S S I O N   O U T C O M E   D I C T I O N A R Y"
+    title = "P R O G R E S S I O N   O U T C O M E :  P A R T  4  -  D I C T I O N A R Y"
     print(tabulate([[title]],tablefmt="fancy_grid"))
     print()
 
@@ -63,16 +71,18 @@ def main():
             try:
                 # get student ID from user
                 student_id = input("\nEnter student ID : ").lower()
-                validate_student_id(student_id) # validate the student id format
-                check_duplicate_student_id(student_id) # check whether the student id already exist in the dictionary
+                if validate_student_id(student_id) is False: # validate the student id format
+                    continue
+                if check_duplicate_student_id(student_id) is True: # check whether the student id already exist in the dictionary
+                    continue
 
                 # get credits from user
-                pass_credits = int(input("Please enter your credits at pass: "))
+                pass_credits = int(input("Please enter credits at pass: "))
                 if validate_credits(pass_credits) is True:
                     if pass_credits == 120:
                         outcome = progression_outcome(pass_credits,0)
                     else:
-                        defer_credits = int(input("Please enter your credits at defer: "))
+                        defer_credits = int(input("Please enter credits at defer: "))
                         if validate_credits(defer_credits) is True:
                             if pass_credits + defer_credits == 120:
                                 outcome = progression_outcome(pass_credits,0)
@@ -80,7 +90,7 @@ def main():
                                 print("Total Incorrect\n")
                                 continue
                             else:
-                                fail_credits = int(input("Please enter your credits at fail: "))
+                                fail_credits = int(input("Please enter credits at fail: "))
                                 if validate_credits(fail_credits) is True:
                                     if pass_credits + defer_credits + fail_credits == 120:
                                         outcome = progression_outcome(pass_credits,fail_credits)
@@ -119,5 +129,5 @@ def main():
             print(key, ' : ', student_progression_outcomes[key])
 
 if __name__ =='__main__':
-    main()
+    dictionary_program_main()
 
