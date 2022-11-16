@@ -1,9 +1,13 @@
 # Student Version with Validations and the Progression Outcome
 # Install tabulate using pip install tabulate
 
-import time
 from part1_staff_version import staff_main
+from part4_dictionary import dictionary_program_main
 from tabulate import tabulate # used to draw the border in the title
+
+# color codes 
+CRED = "\033[91m" #red
+CEND = "\033[0m"  #white
 
 def validate_credits(credits):
     if credits > 120 or credits < 0 or credits % 20 != 0:
@@ -22,8 +26,8 @@ def progression_outcome(pass_credits,fail_credits):
         outcome = "Do not progress - module retriever"
     return outcome
 
-# Main Program
-def main():
+# Student Version Main Program
+def student_main():
     
     title = "S T U D E N T    V E R S I O N"
     print(tabulate([[title]],tablefmt="fancy_grid"))
@@ -68,6 +72,31 @@ def main():
             break
 
 if __name__ =='__main__':
-    main()
-    time.sleep(3)
-    staff_main() # after main is excecuted the program loops to the staff version
+
+    title = "P R O G R E S S I O N   O U T C O M E  - C O U R S E W O R K"
+    print(tabulate([[title]],tablefmt="heavy_grid"))
+    print()
+
+    while True:
+        version_number = input("\nChoose Option from the Menu\n\t1.Student Version\n\t2.Staff Version\n\t3.Staff Version with Dictionary\n\t4.Exit the Program\nEnter Option: ")
+        print()
+        if version_number == "1":
+            student_main()
+        elif version_number == "2":
+            staff_main()
+        elif version_number == "3":
+            dictionary_program_main() 
+        elif version_number == "4":
+            print("Exiting program")
+            exit()
+        else:
+            print("Input not Recognized")
+        
+        
+
+
+""" REFERENCES
+tabulate tables/tabling/border - 
+applying a delay/sleep timer -
+string manipulation documentation -  
+"""
