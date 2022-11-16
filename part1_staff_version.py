@@ -3,7 +3,7 @@
 # display horizontal histogram
 
 from tabulate import tabulate # used to draw the border in the title
-from part2_and_part3 import progression_outcome_list,progression_credit_list,display_data_in_terminal,save_in_text_file
+from part2_and_part3 import display_data_in_terminal,save_in_text_file
 
 # define and assign values for the variables
 pass_credits = 0
@@ -13,11 +13,26 @@ progress_count = 0
 trailer_count = 0
 retriever_count = 0
 exclude_count = 0
+progression_outcome_list = []
+progression_credit_list = []
 
 # color codes for exiting program and display progression outcome
 CRED = "\033[91m" #red
 CBLUE = "\033[34m" #blue
 CEND = "\033[0m"  #white
+
+def reset_stored_data():
+    global pass_credits,defer_credits,fail_credits,progress_count,trailer_count,retriever_count,exclude_count,progression_credit_list,progression_outcome_list
+    pass_credits = 0
+    defer_credits = 0
+    fail_credits = 0
+    progress_count = 0
+    trailer_count = 0
+    retriever_count = 0
+    exclude_count = 0
+    progression_outcome_list = []
+    progression_credit_list = []
+
 
 def validate_credits(credits):
     if credits > 120 or credits < 0 or credits % 20 != 0:
@@ -55,23 +70,26 @@ def horizontal_histogram():
     print("-------------------------------------------------------------------------------------------------------")
 
 # Extentions of the staff version
-# Menu option for listed output and text file handeling
+# Menu option for listed progression output and text file handeling
 def menu():
+    global progression_outcome_list,progression_credit_list
     menu_option = input("Enter 'Y'(or any key) to view all the data in terminal and 'Q' to quit the program : ").lower()
     if menu_option != "q":
-        display_data_in_terminal()
-        menu_option = input("\nEnter 'Y'(or any key) to save the data in a text file and 'Q' to quit the program : ").lower()
+        display_data_in_terminal(progression_outcome_list,progression_credit_list) # imported function
+        # File Handeling
+        menu_option = input("\nEnter 'Y'(or any key) to save the data in a text file and 'Q' to quit the program : ").lower() 
         if menu_option != "q":
-            save_in_text_file()
+            save_in_text_file(progression_outcome_list,progression_credit_list) # imported function
         else:
             print(CRED + "'Q' ENTERED. END OF PROGRAM ..." + CEND)
-            exit()
+            
     else:
         print(CRED + "'Q' ENTERED. END OF PROGRAM ..." + CEND)
-        exit()
+        
 
 # Main Staff Program
 def staff_main():
+    reset_stored_data()
     global pass_credits,defer_credits,fail_credits
 
     title = "S T A F F    V E R S I O N  -  H I S T O G R A M    I N C L U D E D"
@@ -129,3 +147,10 @@ def staff_main():
         horizontal_histogram()
     menu() # menu to display all the data in terminal, file saving or exit
 
+
+""" 
+REFERENCES
+tabulate tables/tabling/border - 
+applying terminal colors - 
+string manipulation documentation -
+"""
