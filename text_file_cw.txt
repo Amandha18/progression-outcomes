@@ -1,5 +1,0 @@
-PROGRESSION OUTCOMES AND CREDITS LIST
-Do not progress - module retriever 	-	 [60, 60, 0]
-Do not progress - module retriever 	-	 [40, 40, 40]
-Progress (module trailer) 	-	 [100, 20, 40]
-Do not progress - module retriever 	-	 [80, 20, 20]
