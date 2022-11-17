@@ -2,7 +2,6 @@
 # saves progression outcomes in a list
 # display horizontal histogram
 
-from tabulate import tabulate # used to draw the border in the title
 from part2_and_part3 import display_data_in_terminal,save_in_text_file
 
 # define and assign values for the variables
@@ -21,7 +20,23 @@ CRED = "\033[91m" #red
 CBLUE = "\033[34m" #blue
 CEND = "\033[0m"  #white
 
-def reset_stored_data():
+# function to add borders around title
+def add_title_border(text):
+    # unicodes for box drawing 
+    # https://en.wikipedia.org/wiki/Box-drawing_character#Unicode
+
+    horizontal = "\u2550"
+    top_left_corner ="\u2554"
+    top_right_corner = "\u2557"
+    vertical = "\u2551"
+    bottom_right_corner ="\u255D"
+    bottom_left_corner = "\u255A"
+
+    print(top_left_corner+horizontal*(len(text)+10)+top_right_corner)
+    print(vertical+f"     {text}     "+vertical)
+    print(bottom_left_corner+horizontal*(len(text)+10)+bottom_right_corner)
+
+def reset_stored_data(): # resets the previous data if the user decides to re-run the staff version 
     global pass_credits,defer_credits,fail_credits,progress_count,trailer_count,retriever_count,exclude_count,progression_credit_list,progression_outcome_list
     pass_credits = 0
     defer_credits = 0
@@ -33,13 +48,14 @@ def reset_stored_data():
     progression_outcome_list = []
     progression_credit_list = []
 
-
+# validate whether credits are less than or equal to 120 and divisible by 20
 def validate_credits(credits):
     if credits > 120 or credits < 0 or credits % 20 != 0:
         print("Out of range\n")
     else:
         return True
 
+# returns the progression outcome based on pass credits and fail credits
 def progression_outcome(pass_credits,fail_credits):
     if pass_credits == 120:
         outcome = "Progress"
@@ -70,7 +86,7 @@ def horizontal_histogram():
     print("-------------------------------------------------------------------------------------------------------")
 
 # Extentions of the staff version
-# Menu option for listed progression output and text file handeling
+# Menu option to choose to display listed outputs and file handeling
 def menu():
     global progression_outcome_list,progression_credit_list
     menu_option = input("Enter 'Y'(or any key) to view all the data in terminal and 'Q' to quit the program : ").lower()
@@ -81,10 +97,10 @@ def menu():
         if menu_option != "q":
             save_in_text_file(progression_outcome_list,progression_credit_list) # imported function
         else:
-            print(CRED + "'Q' ENTERED. END OF PROGRAM ..." + CEND)
+            print(CRED + "'Q' ENTERED. EXITING STAFF VERSION..." + CEND)
             
     else:
-        print(CRED + "'Q' ENTERED. END OF PROGRAM ..." + CEND)
+        print(CRED + "'Q' ENTERED. EXITING STAFF VERSION..." + CEND)
         
 
 # Main Staff Program
@@ -93,7 +109,7 @@ def staff_main():
     global pass_credits,defer_credits,fail_credits
 
     title = "S T A F F    V E R S I O N  -  H I S T O G R A M    I N C L U D E D"
-    print(tabulate([[title]],tablefmt="fancy_grid"))
+    add_title_border(title)
     print()
     run_program = "y"
     
@@ -123,9 +139,9 @@ def staff_main():
                                 else:
                                     continue
                         else:
-                            continue
+                            continue 
                 else:
-                    continue
+                    continue # program continues to ask user for valid input
 
             except ValueError:
                 print("Integer Required\n")
@@ -141,16 +157,8 @@ def staff_main():
                 run_program = input("Press 'Y' (or any key) to enter another set of data, or 'Q' to view the histogram: ")
                 run_program = run_program.lower() 
                 print() 
-                break      
+                break      # exit the loop when user enters q
 
     if run_program == 'q':
-        horizontal_histogram()
+        horizontal_histogram() # display horizontal histogram
     menu() # menu to display all the data in terminal, file saving or exit
-
-
-""" 
-REFERENCES
-tabulate tables/tabling/border - 
-applying terminal colors - 
-string manipulation documentation -
-"""
