@@ -1,6 +1,7 @@
-#dictionary
-from tabulate import tabulate
+# dictionary program
+# can enter multiple records and saves it in a dictionary
 
+# define variables and dictionary
 student_progression_outcomes = {}
 pass_credits = 0
 defer_credits = 0
@@ -10,6 +11,7 @@ fail_credits = 0
 CRED = "\033[91m" #red
 CEND = "\033[0m"  #white
 
+# reseting values entered in a previous program
 def reset_values():
     global student_progression_outcomes,pass_credits,defer_credits,fail_credits
     student_progression_outcomes = {}
@@ -17,6 +19,44 @@ def reset_values():
     defer_credits = 0
     fail_credits = 0
 
+# add border around the title
+def add_title_border(text):
+    # unicodes for box drawing 
+    # double line
+    # https://en.wikipedia.org/wiki/Box-drawing_character#Unicode
+
+    horizontal = "\u2550"
+    top_left_corner ="\u2554"
+    top_right_corner = "\u2557"
+    vertical = "\u2551"
+    bottom_right_corner ="\u255D"
+    bottom_left_corner = "\u255A"
+
+    print(top_left_corner+horizontal*(len(text)+10)+top_right_corner)
+    print(vertical+f"     {text}     "+vertical)
+    print(bottom_left_corner+horizontal*(len(text)+10)+bottom_right_corner)
+
+# box the progression outcomes
+def add_outcome_border(text):
+    # unicodes for box drawing 
+    # single line
+    # https://en.wikipedia.org/wiki/Box-drawing_character#Unicode
+
+    horizontal = "\u2500"
+    top_left_corner ="\u250C"
+    top_right_corner = "\u2510"
+    vertical = "\u2502"
+    bottom_left_corner ="\u2514"
+    bottom_right_corner = "\u2518"
+    sectioning_down = "\u252C"
+    sectioning_up = "\u2534"
+
+    print(top_left_corner+horizontal*21+sectioning_down+horizontal*(len(text)+5)+top_right_corner)
+    print(vertical+"Progression Outcome: "+vertical+f" {text}    "+vertical)
+    print(bottom_left_corner+horizontal*21+sectioning_up+horizontal*(len(text)+5)+bottom_right_corner)
+
+# check whether the student id have the requirements
+# first letter should be w and it should end with 7 digits
 def validate_student_id(student_id):
     valid = False
     if len(student_id) == 8 and student_id.startswith('w'):
@@ -37,6 +77,7 @@ def validate_credits(credits):
     else:
         return True
 
+# check whether the studnet record is already in the dictionary
 def check_duplicate_student_id(student_id):
     if student_id in student_progression_outcomes:
         print(CRED,"Student ID already exist in the dictionary",CEND)
@@ -61,7 +102,7 @@ def dictionary_program_main():
     global pass_credits,defer_credits,fail_credits,student_progression_outcomes
     
     title = "P R O G R E S S I O N   O U T C O M E :  P A R T  4  -  D I C T I O N A R Y"
-    print(tabulate([[title]],tablefmt="fancy_grid"))
+    add_title_border(title)
     print()
 
     run_program = "y"
@@ -110,7 +151,7 @@ def dictionary_program_main():
             
             else:
                 # diplay student number and outcome
-                print(tabulate([[student_id,outcome]],tablefmt="simple_outline"))
+                add_outcome_border(outcome)
                 print("\n")
 
                 # save the student no, progression outcome in a list
@@ -128,6 +169,5 @@ def dictionary_program_main():
         for key in student_progression_outcomes:
             print(key, ' : ', student_progression_outcomes[key])
 
-if __name__ =='__main__':
-    dictionary_program_main()
-
+        print(CRED + "\nEND OF STAFF PROGRAM - DICTIONARY VERSION. RETURNING TO MAIN MENU..." + CEND)
+        
