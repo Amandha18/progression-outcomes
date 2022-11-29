@@ -11,19 +11,19 @@ fail_credits = 0
 CRED = "\033[91m" #red
 CEND = "\033[0m"  #white
 
-# reseting values entered in a previous program
 def reset_values():
+    "Reseting the values that were entered in a previous program"
+    
     global student_progression_outcomes,pass_credits,defer_credits,fail_credits
     student_progression_outcomes = {}
     pass_credits = 0
     defer_credits = 0
     fail_credits = 0
 
-# add border around the title
 def add_title_border(text):
-    # unicodes for box drawing 
-    # double line
-    # https://en.wikipedia.org/wiki/Box-drawing_character#Unicode
+    """ Adds border around the title
+    function contains unicodes for double line box drawing
+    https://en.wikipedia.org/wiki/Box-drawing_character#Unicode """
 
     horizontal = "\u2550"
     top_left_corner ="\u2554"
@@ -36,11 +36,10 @@ def add_title_border(text):
     print(vertical+f"     {text}     "+vertical)
     print(bottom_left_corner+horizontal*(len(text)+10)+bottom_right_corner)
 
-# box the progression outcomes
 def add_outcome_border(text):
-    # unicodes for box drawing 
-    # single line
-    # https://en.wikipedia.org/wiki/Box-drawing_character#Unicode
+    """ Adds border around the progression outcome
+    function contains unicodes for single line box drawing
+    https://en.wikipedia.org/wiki/Box-drawing_character#Unicode """
 
     horizontal = "\u2500"
     top_left_corner ="\u250C"
@@ -55,9 +54,11 @@ def add_outcome_border(text):
     print(vertical+"Progression Outcome: "+vertical+f" {text}    "+vertical)
     print(bottom_left_corner+horizontal*21+sectioning_up+horizontal*(len(text)+5)+bottom_right_corner)
 
-# check whether the student id have the requirements
-# first letter should be w and it should end with 7 digits
+
 def validate_student_id(student_id):
+    """TReturns True if the student ID have the requirements.
+    validated student id -> First letter should be w and it should end with 7 digits"""
+
     valid = False
     if len(student_id) == 8 and student_id.startswith('w'):
         letters_list = [letter for letter in student_id]
@@ -72,20 +73,26 @@ def validate_student_id(student_id):
         return False
 
 def validate_credits(credits):
+    """Returns True if the input credits are valid
+    Credits should be divisible by 20 and less than or equal to 120"""
+
     if credits > 120 or credits < 0 or credits % 20 != 0:
         print("Out of range\n")
     else:
         return True
 
-# check whether the studnet record is already in the dictionary
 def check_duplicate_student_id(student_id):
+    """Checks if the student ID already exists in the dictionary"""
+
     if student_id in student_progression_outcomes:
         print(CRED,"Student ID already exist in the dictionary",CEND)
-        reenter_entry = input("\nPress 'Y'(or any key) if you wish to re-enter student scores or 'Q' to quit: ").lower()
+        reenter_entry = input("\nPress 'Y'(or any key) if you wish to update student scores or 'Q' to quit: ").lower()
         if reenter_entry == 'q': # skip from re entering the student credits
             return True
 
 def progression_outcome(pass_credits,fail_credits):
+    """Returns the progression outcome based on pass credits and fail credits"""
+    
     if pass_credits == 120:
         outcome = "Progress"
     elif pass_credits == 100:
@@ -160,14 +167,16 @@ def dictionary_program_main():
 
                 # user input to run program multiple times
                 run_program = input("Press 'Y' (or any key) to enter another set of data, or 'Q' to view the dictionary: ")
-                run_program = run_program.lower() 
+                run_program = run_program.lower()
                 break
 
     if run_program == "q":
         print("\nS T U D E N T   P R O G R E S S I O N   O U T C O M E S\n")
         # Iterate over the keys in dictionary, access value & print line by line
-        for key in student_progression_outcomes:
+        for key in student_progression_outcomes.keys():
             print(key, ' : ', student_progression_outcomes[key])
 
-        print(CRED + "\nEND OF STAFF PROGRAM - DICTIONARY VERSION. RETURNING TO MAIN MENU..." + CEND)
+        print(CRED + "\nEND OF STAFF PROGRAM - DICTIONARY VERSION." + CEND)
         
+if __name__ == "__main__":
+    dictionary_program_main()
