@@ -1,5 +1,4 @@
 # Student Version with Validations and the Progression Outcome
-# Install tabulate using pip install tabulate
 
 from part1_staff_version import staff_main
 from part4_dictionary import dictionary_program_main
@@ -8,11 +7,10 @@ from part4_dictionary import dictionary_program_main
 CRED = "\033[91m" #red
 CEND = "\033[0m"  #white
 
-# add border around the title
 def add_title_border(text):
-    # unicodes for box drawing 
-    # double line
-    # https://en.wikipedia.org/wiki/Box-drawing_character#Unicode
+    """ Adds a border around the title using unicodes for box drawing 
+    double line
+    https://en.wikipedia.org/wiki/Box-drawing_character#Unicode """
 
     horizontal = "\u2550"
     top_left_corner ="\u2554"
@@ -25,11 +23,11 @@ def add_title_border(text):
     print(vertical+f"     {text}     "+vertical)
     print(bottom_left_corner+horizontal*(len(text)+10)+bottom_right_corner)
 
-# box the progression outcome of the student
+
 def add_outcome_border(text):
-    # unicodes for box drawing 
-    # single line
-    # https://en.wikipedia.org/wiki/Box-drawing_character#Unicode
+    """ Adds a box around the progression outcome using unicodes for box drawing 
+    single line
+    https://en.wikipedia.org/wiki/Box-drawing_character#Unicode """
 
     horizontal = "\u2500"
     top_left_corner ="\u250C"
@@ -44,15 +42,17 @@ def add_outcome_border(text):
     print(vertical+"Your Progression Outcome: "+vertical+f" {text}    "+vertical)
     print(bottom_left_corner+horizontal*26+sectioning_up+horizontal*(len(text)+5)+bottom_right_corner)
 
-# validates whether credits are lower or equal than 120 and divisible by 20
 def validate_credits(credits): 
+    """validates whether credits are lower or equal than 120 and divisible by 20"""
     if credits > 120 or credits < 0 or credits % 20 != 0:
         print("Out of range")
+        return False
     else:
         return True
 
-# returns the progression outcome based on pass credits and fail credits
-def progression_outcome(pass_credits,fail_credits): 
+
+def progression_outcome(pass_credits,fail_credits):
+    """ returns the progression outcome based on pass credits and fail credits """
     if pass_credits == 120:
         outcome = "Progress"
     elif pass_credits == 100:
@@ -74,7 +74,7 @@ def student_main():
         try:
             pass_credits = int(input("Please enter your credits at pass: "))
             if validate_credits(pass_credits) is True:
-                if pass_credits == 120:  # if credits add upto 120, it returns the outcome
+                if pass_credits == 120:  # if credits add upto 120, skips asking for other credits and returns the outcome 
                     outcome = progression_outcome(pass_credits,0)
                 else: # if credits does not add upto 120, ask the user for other credits
                     defer_credits = int(input("Please enter your credits at defer: "))
@@ -131,5 +131,3 @@ if __name__ =='__main__':
             exit()
         else:
             print("Input not Recognized")
-        
-       
