@@ -1,8 +1,5 @@
 # Student Version with Validations and the Progression Outcome
 
-from part1_staff_version import staff_main
-from part4_dictionary import dictionary_program_main
-
 # color codes 
 CRED = "\033[91m" #red
 CEND = "\033[0m"  #white
@@ -45,7 +42,7 @@ def add_outcome_border(text):
 def validate_credits(credits): 
     """validates whether credits are lower or equal than 120 and divisible by 20"""
     if credits > 120 or credits < 0 or credits % 20 != 0:
-        print("Out of range")
+        print("Out of range\n")
         return False
     else:
         return True
@@ -90,7 +87,7 @@ def student_main():
                                 if pass_credits + defer_credits + fail_credits == 120:
                                     outcome = progression_outcome(pass_credits,fail_credits)
                                 else:
-                                    print("Total Incorrect")
+                                    print("Total Incorrect\n")
                                     continue
                             else:
                                 continue
@@ -100,7 +97,7 @@ def student_main():
                 continue
 
         except ValueError: # user input is not an integer
-            print("Integer Required")
+            print("Integer Required\n")
             continue
 
         else:
@@ -109,25 +106,3 @@ def student_main():
             break
     print(CRED + "END OF STUDENT VERSION. RETURNING TO MAIN MENU.." + CEND)
     
-
-if __name__ =='__main__':
-
-    title = "P R O G R E S S I O N   O U T C O M E  - C O U R S E W O R K"
-    add_title_border(title)
-    print()
-
-    # main menu with 4 options
-    while True:
-        version_number = input("\nChoose an option from the Menu\n\t1.Student Version\n\t2.Staff Version\n\t3.Staff Version with Dictionary\n\t4.Exit the Program\nEnter Option: ")
-        print()
-        if version_number == "1":
-            student_main()
-        elif version_number == "2":
-            staff_main()
-        elif version_number == "3":
-            dictionary_program_main() 
-        elif version_number == "4":
-            print(CRED + "Option 4 entered. \nEXITING PROGRAM. THANK YOU!" + CEND)
-            exit()
-        else:
-            print("Input not Recognized")
