@@ -2,7 +2,7 @@ from dictionary_version import dictionary_program_main
 from student_version import add_title_border, student_main
 from staff_version import program_options
 
-# color codes when exiting program and to display progression outcome
+# ANSI color codes
 CRED = "\033[91m" #red
 CEND = "\033[0m"  #white
 
@@ -20,7 +20,7 @@ if __name__ =='__main__':
         if version_number == "1":
             student_main()
         elif version_number == "2":
-            program_options()
+            program_options() # display staff version options(menu)
         elif version_number == "3":
             dictionary_program_main()
         elif version_number == "4":
