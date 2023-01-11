@@ -56,7 +56,7 @@ def add_outcome_border(text):
 
 
 def validate_student_id(student_id):
-    """TReturns True if the student ID have the requirements.
+    """Returns True if the student ID have the requirements.
     validated student id -> First letter should be w and it should end with 7 digits"""
 
     valid = False
@@ -109,11 +109,10 @@ def dictionary_program_main():
     global pass_credits,defer_credits,fail_credits,student_progression_outcomes
     
     title = "P R O G R E S S I O N   O U T C O M E :  P A R T  4  -  D I C T I O N A R Y"
-    add_title_border(title)
+    add_title_border(title) # adds border to the title
     print()
 
     run_program = "y"
-    
     while run_program != "q":
         while True:
             try:
@@ -157,12 +156,12 @@ def dictionary_program_main():
                 continue
             
             else:
-                # diplay student number and outcome
+                # display the student outcome
                 add_outcome_border(outcome)
                 print("\n")
 
-                # save the student no, progression outcome in a list
-                progression_outcome_string = (f"{outcome} - {pass_credits},{defer_credits},{fail_credits}")
+                # save the student no, progression outcome in a dictionary
+                progression_outcome_string = (f"{outcome} - {pass_credits},{defer_credits},{fail_credits}") # saves the progression outcome as a string
                 student_progression_outcomes[student_id] = progression_outcome_string
 
                 # user input to run program multiple times
@@ -172,7 +171,7 @@ def dictionary_program_main():
 
     if run_program == "q":
         print("\nS T U D E N T   P R O G R E S S I O N   O U T C O M E S\n")
-        # Iterate over the keys in dictionary, access value & print line by line
+        # Iterate over the keys in dictionary, access value and print line by line
         for key in student_progression_outcomes.keys():
             print(key, ' : ', student_progression_outcomes[key])
 
