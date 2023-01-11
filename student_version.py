@@ -1,6 +1,6 @@
 # Student Version with Validations and the Progression Outcome
 
-# color codes 
+# ANSI color codes 
 CRED = "\033[91m" #red
 CEND = "\033[0m"  #white
 
@@ -64,7 +64,7 @@ def progression_outcome(pass_credits,fail_credits):
 def student_main():
     
     title = "S T U D E N T    V E R S I O N"
-    add_title_border(title)
+    add_title_border(title) # adds a border
     print()
     
     while True:
@@ -88,9 +88,9 @@ def student_main():
                                     outcome = progression_outcome(pass_credits,fail_credits)
                                 else:
                                     print("Total Incorrect\n")
-                                    continue
+                                    continue # continues to ask user for input, if the credits are not valid
                             else:
-                                continue
+                                continue 
                     else:
                         continue
             else:
@@ -101,8 +101,12 @@ def student_main():
             continue
 
         else:
-            add_outcome_border(outcome)
+            add_outcome_border(outcome) # display the progression outcome
             print()
             break
     print(CRED + "END OF STUDENT VERSION. RETURNING TO MAIN MENU.." + CEND)
     
+
+
+
+
