@@ -5,7 +5,7 @@
 
 from student_version import add_title_border,validate_credits,progression_outcome
 
-# define and assign values for the variables
+# define and assign values for the variables 
 pass_credits = 0
 defer_credits = 0
 fail_credits = 0
@@ -13,10 +13,10 @@ progress_count = 0
 trailer_count = 0
 retriever_count = 0
 exclude_count = 0
-progression_outcome_list = []
-progression_credit_list = []
+progression_outcome_list = [] # list of the progression outcomes
+progression_credit_list = [] # list of the credits(saved as a nested list)
 
-# color codes when exiting program and to display progression outcome
+# ANSI color codes when exiting program and to display progression outcome
 CRED = "\033[91m" #red
 CBLUE = "\033[34m" #blue
 CEND = "\033[0m"  #white
@@ -60,11 +60,10 @@ def horizontal_histogram():
 
 # part 2
 def display_data_in_terminal():
-    """ Display the listed data on screen
-    parameters -> the 2 lists which store the progression outcomes and their credits in numerical form"""
-    if not progression_outcome_list:
+    """ Display the listed data on screen"""
+    
+    if not progression_outcome_list: # if list is empty
         print("No data available! Please make a new record.")
-
     else:
         title = "                              A L L   P R O G R E S S I O N  O U T C O M E S\n"
         print("\n-------------------------------------------------------------------------------------------------------")
@@ -78,26 +77,24 @@ def display_data_in_terminal():
     
 # part 3
 def save_in_text_file():
-    """ Saves multiple progression outcomes in a file. 
-    Parameters -> list of outcomes and the credit list """
+    """ Saves multiple progression outcomes in a file. """
 
     file_path = "text_file_cw.txt"
-    file_data = open(file_path, "w",encoding="UTF-8")
+    open_file = open(file_path, "w",encoding="UTF-8")
     
     # writes all the data into a txt file
     list_length = len(progression_outcome_list)
     for i in range(list_length):
         outcome = progression_outcome_list[i].ljust(50)
         result = f"\n{outcome}  {progression_credit_list[i]}"
-        file_data.write(result)
-    file_data.close()
+        open_file.write(result)
+    open_file.close()
 
     print("Data saved in text file!!!\n\tfile path: ",file_path)
 
-    # reads the file and display data in terminal
     read_file = input("\nEnter 'Y'(or any key) to read the data in text file or 'Q' to exit program : ").lower()
     if read_file != "q":
-        read_text_file()
+        read_text_file() # reads the file and display data in terminal
     else:
         print(CRED + "'Q ENTERED. EXITING STAFF VERSION..." + CEND)
 
@@ -140,7 +137,6 @@ def staff_main():
     add_title_border(title)
     print()
     run_program = "y"
-
     while run_program != "q":
         while True:
             try:
@@ -178,38 +174,37 @@ def staff_main():
             else:
                 # save the outcome and the credits in a list
                 progression_outcome_list.append(outcome)
-                progression_credit_list.append([pass_credits,defer_credits,fail_credits])
+                progression_credit_list.append([pass_credits,defer_credits,fail_credits]) # nested list
                 print(CBLUE + f"Progression Outcome: {outcome} " + CEND)
 
                 # ask user preference to enter multiple data
                 run_program = input("Press 'Y' (or any key) to enter another set of data, or 'Q' to view the histogram: ")
                 run_program = run_program.lower() 
                 print() 
-                break      # exit the loop when user enters q
+                break      # exits the loop
 
     if run_program == 'q':
         horizontal_histogram() # display horizontal histogram
     extention_menu() # menu to display all the data in terminal, file saving or exit
 
 def program_options():
+    " Menu for all staff version options"
+
     title = " S T A F F    V E R S I O N "
     add_title_border(title)
     print()
 
     run_staff = True
     while run_staff is True:
-
         print("                             S T A F F   V E R S I O N    -    M E N U")
-
-        program_options = input("\n\t1. Enter a New Record\n\t2. View Saved Data Records\n\t3. Return to Main Menu\nOption number: ")
+        program_options = input("\n\t1. Enter a New Record\n\t2. View Saved Data Records\n\t3. Return to Main Menu\nOption number: ") # main options in staff version
         if program_options == "1":
             staff_main()
         elif program_options == "2":
             sub_menu = True
-
             while sub_menu is True:
                 print("\n                  S T A F F    V E R S I O N  -  S A V E D   R E C O R D S  M E N U")
-                sub_option = input("\n\t1. View Horizontal Histogram\n\t2. Display Saved Data\n\t3. Display File Data\n\t4. Return to Menu\nOption number: ")
+                sub_option = input("\n\t1. View Horizontal Histogram\n\t2. Display Saved Data\n\t3. Display File Data\n\t4. Return to Menu\nOption number: ") # options to view saved data
                 if sub_option == "1":
                     horizontal_histogram()
                 elif sub_option == "2":
